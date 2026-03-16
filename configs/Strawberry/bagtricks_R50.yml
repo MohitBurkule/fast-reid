@@ -1,0 +1,40 @@
+_BASE_: ../Base-bagtricks.yml
+
+MODEL:
+  BACKBONE:
+    NAME: build_resnet_backbone
+    DEPTH: 50x
+    FEAT_DIM: 2048  # Must match ResNet-50 output
+
+DATASETS:
+  NAMES: ("Strawberry",)
+  TESTS: ("Strawberry",)
+
+OUTPUT_DIR: logs/strawberry/bagtricks_R50
+
+SOLVER:
+  AMP:
+    ENABLED: False  # Disable AMP for PyTorch 2.5 compatibility
+  OPT: Adam
+  MAX_EPOCH: 120  # More epochs for convergence
+  BASE_LR: 0.00035  # Back to original - matches base config
+  WEIGHT_DECAY: 0.0005
+  WEIGHT_DECAY_NORM: 0.0005
+  IMS_PER_BATCH: 32
+
+  SCHED: MultiStepLR
+  STEPS: [40, 90]  # Later LR drops for longer training
+  GAMMA: 0.1
+
+  WARMUP_FACTOR: 0.1
+  WARMUP_ITERS: 500
+
+  CHECKPOINT_PERIOD: 1  # Save checkpoint every epoch
+
+TEST:
+  EVAL_PERIOD: 1  # Evaluate every epoch
+  IMS_PER_BATCH: 64
+
+INPUT:
+  SIZE_TRAIN: [256, 128]
+  SIZE_TEST: [256, 128]

@@ -9,3 +9,7 @@ DATASETS:
   TESTS: ("DukeMTMC",)
 
 OUTPUT_DIR: logs/dukemtmc/bagtricks_S50
+
+SOLVER:
+  AMP:
+    ENABLED: False  # Disable AMP due to PyTorch 2.5 compatibility issues

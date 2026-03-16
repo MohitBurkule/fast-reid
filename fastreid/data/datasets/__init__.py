@@ -33,6 +33,7 @@ from .viper import VIPeR
 from .lpw import LPW
 from .shinpuhkan import Shinpuhkan
 from .wildtracker import WildTrackCrop
+from .strawberry import Strawberry
 from .cuhk_sysu import cuhkSYSU
 
 # Vehicle re-id datasets

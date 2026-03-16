@@ -79,6 +79,17 @@ class ReidEvaluator(DatasetEvaluator):
         gallery_pids = pids[self._num_query:]
         gallery_camids = camids[self._num_query:]
 
+        # Debug: check pid consistency
+        import logging
+        logger = logging.getLogger(__name__)
+        query_unique = set(query_pids.tolist())
+        gallery_unique = set(gallery_pids.tolist())
+        logger.info(f"Query unique pids: {len(query_unique)} ({min(query_unique)} to {max(query_unique)})")
+        logger.info(f"Gallery unique pids: {len(gallery_unique)} ({min(gallery_unique) if len(gallery_unique) > 0 else 'N/A'} to {max(gallery_unique) if len(gallery_unique) > 0 else 'N/A'})")
+        missing_in_gallery = query_unique - gallery_unique
+        if missing_in_gallery:
+            logger.warning(f"Query pids missing in gallery: {sorted(list(missing_in_gallery))[:10]}...")
+
         self._results = OrderedDict()
 
         if self.cfg.TEST.AQE.ENABLED:

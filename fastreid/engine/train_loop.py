@@ -323,8 +323,7 @@ class AMPTrainer(SimpleTrainer):
 
         if grad_scaler is None:
             from torch.cuda.amp import GradScaler
-
-            grad_scaler = GradScaler()
+            grad_scaler = GradScaler()  # Use deprecated API for compatibility
         self.grad_scaler = grad_scaler
 
     def run_step(self):
